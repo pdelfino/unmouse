@@ -18,12 +18,12 @@ Everything that wasn't about text selection has been ripped out. No link hints, 
 2. Open `brave://extensions` (or `chrome://extensions`)
 3. Enable "Developer mode"
 4. Click "Load unpacked" and select the project folder
-5. Navigate to any page and press `Alt+Shift+V`
+5. Navigate to any page and press `Cmd+Shift+U` (Mac) or `Ctrl+Shift+U` (Windows/Linux)
 6. Welcome to the mouseless life
 
 ## How it works
 
-Press `Alt+Shift+V` on any page. You enter **Caret mode** -- a cursor appears on the page. Move it around. Press `v` to start selecting text (**Visual mode**). Press `y` or `Enter` to copy. That's it. That's the whole extension.
+Press `Cmd+Shift+U` on any page. You enter **Caret mode** -- a cursor appears on the page. Move it around. Press `v` to start selecting text (**Visual mode**). Press `y` or `Enter` to copy. That's it. That's the whole extension.
 
 ### Modes
 
@@ -35,20 +35,22 @@ Press `Alt+Shift+V` on any page. You enter **Caret mode** -- a cursor appears on
 
 ### Movement keys
 
-| Key | Action |
-|-----|--------|
-| `h` / `ArrowLeft` | Move backward by character |
-| `l` / `ArrowRight` | Move forward by character |
-| `j` / `ArrowDown` | Move down by line |
-| `k` / `ArrowUp` | Move up by line |
-| `w` | Forward by word |
-| `b` | Backward by word |
-| `0` | Beginning of line |
-| `$` | End of line |
-| `(` / `)` | Backward/forward by sentence |
-| `{` / `}` | Backward/forward by paragraph |
-| `gg` | Top of document |
-| `G` | Bottom of document |
+Three layers of keybindings coexist peacefully -- use whichever feels like home:
+
+| Vim | Arrow | Emacs | Action |
+|-----|-------|-------|--------|
+| `h` | `Left` | `C-b` | Backward by character |
+| `l` | `Right` | `C-f` | Forward by character |
+| `j` | `Down` | `C-n` | Down by line |
+| `k` | `Up` | `C-p` | Up by line |
+| `w` | | `M-f` | Forward by word |
+| `b` | | `M-b` | Backward by word |
+| `0` | `Home` | `C-a` | Beginning of line |
+| `$` | `End` | `C-e` | End of line |
+| `(` / `)` | | | Backward/forward by sentence |
+| `{` / `}` | | | Backward/forward by paragraph |
+| `gg` | | | Top of document |
+| `G` | | | Bottom of document |
 
 ### Actions
 

@@ -21,7 +21,8 @@
   "commands": {
     "activate-unmouse": {
       "suggested_key": {
-        "default": "Alt+Shift+V"
+        "default": "MacCtrl+Shift+U",
+        "mac": "Command+Shift+U"
       },
       "description": "Activate Unmouse visual mode"
     }

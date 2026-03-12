@@ -308,35 +308,57 @@ class VisualMode extends KeyHandlerMode {
   }
 }
 
-// Movement keybindings — vim keys + arrow keys.
+// Movement keybindings — vim keys + arrow keys + direct Emacs bindings.
+//
+// Three layers of navigation support:
+//   1. Vim: h/j/k/l, w/b, 0/$, gg/G
+//   2. Arrow keys: works if Karabiner translates C-f/b/n/p to arrows
+//   3. Direct Emacs: <c-f>, <c-b>, <c-n>, <c-p>, <c-a>, <c-e>, <a-f>, <a-b>
+//
 VisualMode.prototype.movements = {
   // Character movement
   "l": "forward character",
   "h": "backward character",
+  "<right>": "forward character",
+  "<left>": "backward character",
+  "<c-f>": "forward character",
+  "<c-b>": "backward character",
+
   // Line movement
   "j": "forward line",
   "k": "backward line",
+  "<down>": "forward line",
+  "<up>": "backward line",
+  "<c-n>": "forward line",
+  "<c-p>": "backward line",
+
   // Word movement
   "w": "forward word",
   "b": "backward word",
-  // Sentence movement
-  ")": "forward sentence",
-  "(": "backward sentence",
-  // Paragraph movement
-  "}": "forward paragraph",
-  "{": "backward paragraph",
+  "<a-right>": "forward word",
+  "<a-left>": "backward word",
+  "<a-f>": "forward word",
+  "<a-b>": "backward word",
+
   // Line boundary
   "0": "backward lineboundary",
   "$": "forward lineboundary",
+  "<home>": "backward lineboundary",
+  "<end>": "forward lineboundary",
+  "<c-a>": "backward lineboundary",
+  "<c-e>": "forward lineboundary",
+
   // Document boundary
   "G": "forward documentboundary",
   "gg": "backward documentboundary",
 
-  // Arrow key alternatives
-  "<right>": "forward character",
-  "<left>": "backward character",
-  "<down>": "forward line",
-  "<up>": "backward line",
+  // Sentence movement
+  ")": "forward sentence",
+  "(": "backward sentence",
+
+  // Paragraph movement
+  "}": "forward paragraph",
+  "{": "backward paragraph",
 
   // Select word/sentence
   "aw"(count) {
@@ -346,7 +368,7 @@ VisualMode.prototype.movements = {
     return this.movement.selectLexicalEntity(sentence, count);
   },
 
-  // Yank (copy)
+  // Yank / copy
   "y"() {
     return this.yank();
   },
