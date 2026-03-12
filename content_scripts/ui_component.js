@@ -100,7 +100,7 @@ class UIComponent {
             globalThis.addEventListener(
               "focus",
               forTrusted((event) => {
-                if ((event.target === window) && this.focusOptions.focus) {
+                if ((event.target === window) && this.focusOptions.focus && !this.preventAutoHide) {
                   this.hide(false);
                 }
                 // Continue propagating the event.

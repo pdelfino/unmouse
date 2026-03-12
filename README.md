@@ -23,15 +23,28 @@ Everything that wasn't about text selection has been ripped out. No link hints, 
 
 ## How it works
 
-Press `Cmd+Shift+U` on any page. You enter **Caret mode** -- a cursor appears on the page. Move it around. Press `v` to start selecting text (**Visual mode**). Press `y` or `Enter` to copy. That's it. That's the whole extension.
+Press `Cmd+Shift+U` on any page. A search bar appears at the bottom. Type to find text on the page -- matches are highlighted live with a count ("3 of 12"). Use `Ctrl+N`/`Ctrl+P` (or arrow keys) to cycle through matches. Press `Enter` to land on the current match and enter **Caret mode**. From there, move the cursor, press `v` to select, and `y` or `Enter` to copy. That's the whole extension.
+
+The cursor stays centered on screen as you move, like Emacs's `centered-cursor-mode`.
 
 ### Modes
 
 | Mode | What it does |
 |------|-------------|
+| **Search** | Incremental search to jump to text. Like `C-s` in Emacs or `Ctrl+F` in the browser, but better. |
 | **Caret** | A cursor you move around the page. The "I'm looking for something" mode. |
 | **Visual** | Text selection, character by character. The "I found it" mode. |
 | **Visual Line** | Like Visual, but selects whole lines. For when you're feeling greedy. |
+
+### Search keys
+
+| Key | Action |
+|-----|--------|
+| Type text | Incremental search with live match count |
+| `Ctrl+N` or `Down` | Next match |
+| `Ctrl+P` or `Up` | Previous match |
+| `Enter` | Confirm match, enter Caret mode |
+| `Escape` | Cancel search |
 
 ### Movement keys
 

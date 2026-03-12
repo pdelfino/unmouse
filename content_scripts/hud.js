@@ -4,6 +4,9 @@
 const HUD = {
   tween: null,
   hudUI: null,
+  _searchCallback: null,
+  _searchState: null,
+
   abandon() {
     if (this.hudUI) {
       this.hudUI.hide(false);
@@ -14,11 +17,87 @@ const HUD = {
     const handlers = {
       unfocusIfFocused: this.unfocusIfFocused,
       showClipboardUnavailableMessage: this.showClipboardUnavailableMessage,
+      searchUpdate: (data) => this._handleSearchUpdate(data.text),
+      searchNext: () => this._handleSearchNav(false),
+      searchPrev: () => this._handleSearchNav(true),
+      searchConfirm: () => {
+        const found = this._searchState && this._searchState.total > 0;
+        this._endSearch();
+        const cb = this._searchCallback;
+        this._searchCallback = null;
+        if (cb) cb(found);
+      },
+      searchCancelled: () => {
+        window.getSelection().removeAllRanges();
+        this._endSearch();
+        const cb = this._searchCallback;
+        this._searchCallback = null;
+        if (cb) cb(false);
+      },
     };
     const handler = handlers[data.name];
     if (handler) {
       return handler.bind(this)(data);
     }
+  },
+
+  _countMatches(searchText) {
+    if (!searchText) return 0;
+    const bodyText = document.body.innerText.toLowerCase();
+    const search = searchText.toLowerCase();
+    let count = 0;
+    let pos = -1;
+    while ((pos = bodyText.indexOf(search, pos + 1)) !== -1) {
+      count++;
+    }
+    return count;
+  },
+
+  _handleSearchUpdate(text) {
+    if (!text) {
+      this._searchState = { text: "", current: 0, total: 0 };
+      window.getSelection().removeAllRanges();
+      this._sendSearchCount();
+      return;
+    }
+    const total = this._countMatches(text);
+    window.getSelection().removeAllRanges();
+    let current = 0;
+    if (total > 0 && window.find(text, false, false, true)) {
+      current = 1;
+    }
+    this._searchState = { text, current, total };
+    this._sendSearchCount();
+  },
+
+  _handleSearchNav(backwards) {
+    if (!this._searchState || this._searchState.total === 0) return;
+    const { text, current, total } = this._searchState;
+    if (window.find(text, false, backwards, true)) {
+      if (backwards) {
+        this._searchState.current = current <= 1 ? total : current - 1;
+      } else {
+        this._searchState.current = current >= total ? 1 : current + 1;
+      }
+    }
+    this._sendSearchCount();
+  },
+
+  _sendSearchCount() {
+    if (!this._searchState || !this.hudUI) return;
+    this.hudUI.postMessage({
+      name: "updateSearchCount",
+      current: this._searchState.current,
+      total: this._searchState.total,
+    });
+  },
+
+  _endSearch() {
+    this._searchState = null;
+    if (this.hudUI) {
+      this.hudUI.preventAutoHide = false;
+    }
+    this.hide(true, false);
   },
 
   async init(focusable) {
@@ -78,6 +157,16 @@ const HUD = {
         this.tween.fade(0, 150, () => this.hide(true, updateIndicator));
       }
     }
+  },
+
+  async showSearchMode(callback) {
+    await DomUtils.documentComplete();
+    this._searchCallback = callback;
+    this._searchState = { text: "", current: 0, total: 0 };
+    await this.init(true);
+    this.hudUI.preventAutoHide = true;
+    this.hudUI.show({ name: "showSearchMode" }, { focus: true });
+    this.tween.fade(1.0, 150);
   },
 
   async copyToClipboard(text) {
