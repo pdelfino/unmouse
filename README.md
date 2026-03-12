@@ -82,6 +82,14 @@ Three layers of keybindings coexist -- use whichever feels like home:
 | `o` | Reverse selection direction |
 | `Escape` | Exit back to normal browsing |
 
+## Karabiner Elements (recommended for macOS)
+
+Unmouse has built-in Emacs bindings (`C-f`, `C-n`, etc.) that work inside its modes. But if you want Emacs-style navigation **everywhere** in the browser -- address bar, text fields, dropdowns -- you need [Karabiner Elements](https://karabiner-elements.pqrs.org/) translating at the OS level.
+
+Import the **"Emacs key bindings [control+keys]"** rule from the [Karabiner complex modifications gallery](https://ke-complex-modifications.pqrs.org/#emacs_key_bindings). This maps `C-n` to `Down Arrow`, `C-p` to `Up Arrow`, etc. before the browser ever sees them. Without this, `Ctrl+N` opens a new window instead of scrolling down -- the browser intercepts it before any extension can.
+
+Make sure the rule is enabled in your **active profile**. Karabiner has multiple profiles; the rule must be present in the one you're actually using.
+
 ## Acknowledgments
 
 Built on the shoulders of [Vimium](https://github.com/philc/vimium), one of the greatest browser extensions ever made. Massive respect to the Vimium team. If you want the full vim-in-the-browser experience, go use Vimium. If you just want to copy text without touching a rodent, you are in the right place.
