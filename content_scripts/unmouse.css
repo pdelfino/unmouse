@@ -1,0 +1,98 @@
+/*
+ * Unmouse CSS — stripped from Vimium's vimium.css.
+ * Only retains styles needed for HUD and UIComponent.
+ */
+
+:root {
+  --vimium-background-color: white;
+  --vimium-background-text-color: black;
+  --vimium-foreground-color: white;
+  --vimium-foreground-text-color: black;
+}
+
+.vimium-reset,
+div.vimium-reset,
+span.vimium-reset {
+  background: none;
+  border: none;
+  bottom: auto;
+  box-shadow: none;
+  color: black;
+  cursor: auto;
+  display: inline;
+  float: none;
+  font-family: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: inherit;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  height: auto;
+  left: auto;
+  letter-spacing: 0;
+  line-height: 100%;
+  margin: 0;
+  max-height: none;
+  max-width: none;
+  min-height: 0;
+  min-width: 0;
+  opacity: 1;
+  padding: 0;
+  position: static;
+  right: auto;
+  text-align: left;
+  text-decoration: none;
+  text-indent: 0;
+  text-shadow: none;
+  text-transform: none;
+  top: auto;
+  vertical-align: baseline;
+  white-space: normal;
+  width: auto;
+  z-index: 2147483647;
+}
+
+/* UIComponent CSS */
+iframe.vimium-ui-component-hidden {
+  display: none;
+}
+
+iframe.vimium-ui-component-visible {
+  display: block;
+  color-scheme: light dark;
+}
+
+iframe.vimium-non-clickable {
+  pointer-events: none;
+}
+
+/* HUD frame */
+iframe.unmouse-hud-frame {
+  background-color: transparent;
+  padding: 0px;
+  overflow: hidden;
+  display: block;
+  position: fixed;
+  width: 20%;
+  min-width: 350px;
+  height: 58px;
+  bottom: -14px;
+  right: 20px;
+  margin: 0 0 0 -40%;
+  border: none;
+  z-index: 2147483647;
+  opacity: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --vimium-background-color: #1d1d1f;
+    --vimium-background-text-color: #e3e3e3;
+    --vimium-foreground-color: #292a2d;
+    --vimium-foreground-text-color: #e8eaed;
+  }
+
+  iframe.vimium-reverse-dark-reader-filter {
+    -webkit-filter: invert(100%) hue-rotate(180deg) !important;
+    filter: invert(100%) hue-rotate(180deg) !important;
+  }
+}

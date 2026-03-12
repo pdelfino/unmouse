@@ -47,10 +47,13 @@ class UIComponent {
     // Default to everything hidden while the stylesheet loads.
     styleSheet.innerHTML = "iframe {display: none;}";
 
-    // Fetch "content_scripts/vimium.css" from chrome.storage.session; the background page caches
-    // it there.
+    // Fetch the cached CSS from chrome.storage.session (set by the background service worker).
     chrome.storage.session.get("vimiumCSSInChromeStorage")
-      .then((items) => styleSheet.innerHTML = items.vimiumCSSInChromeStorage);
+      .then((items) => {
+        if (items.vimiumCSSInChromeStorage) {
+          styleSheet.innerHTML = items.vimiumCSSInChromeStorage;
+        }
+      });
 
     this.iframeElement.className = className;
 
@@ -187,18 +190,7 @@ class UIComponent {
     if (this.focusOptions.focus) {
       this.iframeElement.blur();
       if (shouldRefocusOriginalFrame) {
-        if (this.focusOptions.sourceFrameId != null) {
-          chrome.runtime.sendMessage({
-            handler: "sendMessageToFrames",
-            frameId: this.focusOptions.sourceFrameId,
-            message: {
-              handler: "focusFrame",
-              forceFocusThisFrame: true,
-            },
-          });
-        } else {
-          Utils.nextTick(() => globalThis.focus());
-        }
+        Utils.nextTick(() => globalThis.focus());
       }
     }
     this.focusOptions = {};
