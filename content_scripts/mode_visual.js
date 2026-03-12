@@ -155,12 +155,17 @@ class Movement {
   }
 
   scrollIntoView() {
-    if (this.selection.type !== "None") {
-      const elementWithFocus = DomUtils.getElementWithFocus(
-        this.selection,
-        this.getDirection() === backward,
-      );
-      if (elementWithFocus) return Scroller.scrollIntoView(elementWithFocus);
+    if (this.selection.type === "None") return;
+    // Centered cursor mode: keep the selection vertically centered in the viewport,
+    // like Emacs's centered-cursor-mode.
+    const range = this.selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    if (!rect || (!rect.height && !rect.width)) return;
+    const cursorY = rect.top + rect.height / 2;
+    const viewportCenter = globalThis.innerHeight / 2;
+    const offset = cursorY - viewportCenter;
+    if (Math.abs(offset) > 1) {
+      globalThis.scrollBy({ top: offset, behavior: "instant" });
     }
   }
 }
