@@ -1,6 +1,6 @@
 # Unmouse
 
-![The Lacemaker](https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Johannes_Vermeer_-_The_lacemaker_%28c.1669-1671%29.jpg/600px-Johannes_Vermeer_-_The_lacemaker_%28c.1669-1671%29.jpg)
+![The Lacemaker](./painting.jpg)
 
 *"The Lacemaker" (c. 1669–1670) by Johannes Vermeer — [Wikipedia](https://en.wikipedia.org/wiki/The_Lacemaker_(Vermeer))*
 
